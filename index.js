@@ -1,16 +1,21 @@
 //black-jack-server/index.js
-const db = require('./db')
-const model = require('./user/model')
-
-const express = require('express')
 //const db = require('./db')
-//const Image = require('./image/model')
-//routers
+//const User = require('./user/model')
 
+const Cards = require('./cards/model')
 const bodyParser = require('body-parser')
 //const cors = require('cors')
+
+//const authRouter = require('./auth/router')
+const userRouter = require('./user/router')
+
+
+const express = require('express')
+
+
+
 //const corsMiddleware = cors()
-//const parserMiddleware = bodyParser.json()
+const parserMiddleware = bodyParser.json()
 
 
 
@@ -20,11 +25,9 @@ const app = express()
 const port = process.env.PORT || 4000
 
 //app.use(corsMiddleware)
-//app.use(parserMiddleware)
+app.use(parserMiddleware)
 
-//app.use(Image) no longer required when you define routs in imageRouter.  imageRouter requires ./image/model
-//app.use(imageRouter)
 //app.use(authRouter)
-//app.use(userRouter)
+app.use(userRouter)
 
 app.listen(port, console.log(`listening on port: ${port}`))

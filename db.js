@@ -5,7 +5,7 @@ const databaseURL = process.env.DATABASE_URL || 'postgres://postgres:secret@loca
 
 const db = new Sequelize(databaseURL)
 
-db.sync()
+db.sync({force: true})
     .then(() => console.log('Database schema updated'))
     .catch(err => {
         console.error('Unable to create tables, shutting down...', err);
