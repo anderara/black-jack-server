@@ -7,7 +7,7 @@ const authRouter = require('./auth/router')
 const cors = require('cors')
 
 
-const userRouter = require('./user/router')
+const playerRouter = require('./player/router')
 
 
 const express = require('express')
@@ -15,17 +15,13 @@ const express = require('express')
 const corsMiddleware = cors()
 const parserMiddleware = bodyParser.json()
 
-
-
 const app = express()
-
-
 const port = process.env.PORT || 4000
 
 app.use(corsMiddleware)
 app.use(parserMiddleware)
 
 app.use(authRouter)
-app.use(userRouter)
+app.use(playerRouter)
 
 app.listen(port, console.log(`listening on port: ${port}`))

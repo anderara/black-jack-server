@@ -1,6 +1,6 @@
 //black-jack-server/auth/router.js
 const { Router } = require('express')
-const User = require('../user/model')
+const Player = require('../player/model')
 const bcrypt = require('bcrypt')
 const auth = require('./middleware')
 const { toJWT, toData } = require('./jwt')
@@ -14,7 +14,7 @@ router.post('/login', (req, res, next) => {
             message: "Please supply a valid email and password"
         })
     }else{
-        User
+        Player
             .findOne({
                 where: {
                 email: req.body.email
@@ -23,12 +23,12 @@ router.post('/login', (req, res, next) => {
             .then(entity => {
                 if (!entity) {
                   res.status(400).send({
-                    message: 'User with that email does not exist'
+                    message: 'Player with that email does not exist'
                   })
                 } else if (bcrypt.compareSync(req.body.password, entity.password)) {
                     // 3. if the password is correct, return a JWT with the userId of the user (user.id)
                     res.send({
-                      jwt: toJWT({ userId: entity.id })
+                      jwt: toJWT({ playerId: entity.id })
                     })
                 } else {
                     res.status(400).send({
@@ -49,7 +49,7 @@ router.post('/login', (req, res, next) => {
 router.get('/secret-endpoint', auth, (req, res) => {
 
     res.send({
-        message: `Thanks for visiting the secret endpoint ${req.user.email}.`,
+        message: `Thanks for visiting the secret endpoint ${req.player.email}.`,
       })
    
   })

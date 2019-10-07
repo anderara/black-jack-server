@@ -22,7 +22,7 @@ const Cards = sequelize.define('card', {
     card5:{
         type: Sequelize.STRING
     },
-    userClickedStart: {
+    playerClickedStart: {
         type: Sequelize.BOOLEAN
     }
 

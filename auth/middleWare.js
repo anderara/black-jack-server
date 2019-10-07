@@ -1,5 +1,5 @@
 //black-jack-server/auth/middleWare.js
-const User = require('../user/model')
+const User = require('../player/model')
 const { toData } = require('./jwt')
 
 function auth(req, res, next) {
