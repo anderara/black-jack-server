@@ -1,0 +1,35 @@
+//black-jack-server/player/router.js
+const { Router } = require('express')
+const Player = require('./model')
+const bcrypt = require('bcrypt')
+const router = new Router()
+
+router.post('/player', (req, res, next) => {
+
+    const player = {
+        email: req.body.email,
+        playerName: req.body.playerName,
+        password: bcrypt.hashSync(req.body.password, 10)
+    }
+    Player.findOne({where: {
+        email: player.email
+        }
+    })
+    .then(
+        playerRes => {
+            if(playerRes){
+            console.log(`Player ${player.email} already exists`, playerRes)
+            res.status(400).send(player)
+            
+        }else{
+            Player.create(player)
+            .then(
+            player => res.status(200).send(player)
+            )
+        }
+    })
+    .catch(next)
+    
+})
+
+module.exports = router

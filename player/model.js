@@ -1,9 +1,9 @@
-//black-jack-server/user/model.js
+//black-jack-server/player/model.js
 const Sequelize = require('sequelize')
 const sequelize = require('../db')
 
-const User = sequelize.define('user', {
-    userName:{
+const Player = sequelize.define('player', {
+    playerName:{
         type: Sequelize.STRING,
         allowNull: false
     },
@@ -26,4 +26,4 @@ const User = sequelize.define('user', {
   //  tableName: 'users'
   })
   
-  module.exports = User
+  module.exports = Player
