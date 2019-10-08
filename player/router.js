@@ -3,7 +3,11 @@ const { Router } = require('express')
 const Player = require('./model')
 const bcrypt = require('bcrypt')
 const router = new Router()
-
+router.get('/', (req, res, next)=>{
+    console.log('hello from the get ')
+    res.status(200).send('hello from get')
+    .catch(err=>next(err))
+})
 router.post('/player', (req, res, next) => {
 
     const player = {
