@@ -2,6 +2,7 @@
 const { Router } = require('express')
 const Player = require('./model')
 const bcrypt = require('bcrypt')
+const auth = require('../auth/middleWare')
 const router = new Router()
 router.get('/', (req, res, next)=>{
     console.log('hello from the get ')
@@ -34,6 +35,13 @@ router.post('/player', (req, res, next) => {
     })
     .catch(next)
     
+})
+
+//let player join a room
+
+router.put('/joinroom', (req, res, next) => {
+    //console.log('POST AN IMAGE REQ IS', req.userId)
+    console.log('You are trying to join a room')
 })
 
 module.exports = router

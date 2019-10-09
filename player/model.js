@@ -1,6 +1,7 @@
 //black-jack-server/player/model.js
 const Sequelize = require('sequelize')
 const sequelize = require('../db')
+const gamerooms = require('../gamerooms/model')
 
 const Player = sequelize.define('player', {
     playerName:{
@@ -20,10 +21,18 @@ const Player = sequelize.define('player', {
     },
     gamesLost: {
         type: Sequelize.INTEGER
+    },
+    playerClickedStart: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     }
   }, {
     timestamps: false,
   //  tableName: 'users'
   })
+
+  
+  Player.belongsTo(gamerooms)
+  gamerooms.hasMany(Player)
   
   module.exports = Player
