@@ -39,9 +39,6 @@ router.post('/player', (req, res, next) => {
 
 //let player join a room
 
-router.put('/joinroom', (req, res, next) => {
-    //console.log('POST AN IMAGE REQ IS', req.userId)
-    console.log('You are trying to join a room')
-})
+
 
 module.exports = router

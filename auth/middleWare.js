@@ -1,5 +1,5 @@
 //black-jack-server/auth/middleWare.js
-const User = require('../player/model')
+const Player = require('../player/model')
 const { toData } = require('./jwt')
 
 function auth(req, res, next) {
@@ -7,14 +7,15 @@ function auth(req, res, next) {
   if (auth && auth[0] === 'Bearer' && auth[1]) {
     try {
       const data = toData(auth[1])
-      User
-        .findByPk(data.userId)
-        .then(user => {
-          if (!user) return next('User does not exist')
-          console.log('user is:', user)
-          req.user = user
-          console.log("req.user is", req.user)
-          req.userId = data.userId  //added this line to try and add userId column to images
+      console.log('data is', data)
+      Player
+        .findByPk(data.playerId)
+        .then(player => {
+          if (!player) return next('Player does not exist')
+          console.log('player is:', player)
+          req.player = player
+          console.log("req.player is", req.player)
+          req.playerId = data.playerId  //added this line to try and add userId column to images
           next()
         })
         .catch(next)
