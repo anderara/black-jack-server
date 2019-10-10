@@ -13,7 +13,8 @@ const stream = new Sse()
 router.get('/gameroom', async (req, res, next)=>{
     try{
         console.log('stream game rooms example ')
-        const gameRooms = await GameRooms.findAll()
+        const gameRooms = await GameRooms.findAll({include:[{model: Player}]})
+        //console.log('gameRooms data looks like this:', gameRooms)
         const data = JSON.stringify(gameRooms)
         stream.updateInit(data)
         stream.init(req,res)
@@ -34,8 +35,9 @@ router.post('/gameroom', async (req, res, next) => {
                 gameRoomName: req.body.gameRoomName
             }
             const newroom = await GameRooms.create(gameroom)
-            const gameRooms = await GameRooms.findAll()
+            const gameRooms = await GameRooms.findAll({include:[{model: Player}]})
             const data = JSON.stringify(gameRooms)
+            console.log('gameRooms data is', data)
             stream.updateInit(data)
             stream.init(req,res)
             /*.then(
@@ -49,23 +51,42 @@ router.post('/gameroom', async (req, res, next) => {
     
 })
 
-//player wants to join a room
+//player joins this room
 router.put('/joinroom', auth, async (req, res, next) => {
-    //console.log('POST AN IMAGE REQ IS', req.userId)
-    console.log('You are true')
-    console.log('GAMEROOMS req.playerID', req.playerId)
-    console.log('req.body is:', req.body)
-    
+ 
+    console.log('PLAYER JOINING ROOM')
     //find the player
     const foundPlayer = await Player.findByPk(req.playerId)
-    //console.log('FOUND PLAYER IS', foundPlayer)
-    console.log('foundPlayer in game room is', foundPlayer)
-    console.log('req.body.gameRoomId is', req.body.gameRoomId)
+
     const updatefoundPlayer = await foundPlayer.update({
         gameroomId: req.body.gameRoomId
     })
-
-
 })
 
+//check whether player has clicked start and tell other players when
+//another player has clicked start
+
+//player has joined room
+//display room name and players in room
+//update players in room if necessary
+
+const streamPlayingRoom = new Sse()
+router.get('/playingroom', async (req, res, next) => {
+//this end point gets entered into
+    try{
+        //const gameRooms = await GameRooms.findAll({include:[{model: Player}]})
+        const allPlayers = await Player.findAll()
+        //console.log('gameRooms data looks like this:', gameRooms)
+        const data = JSON.stringify(allPlayers)
+        streamPlayingRoom.updateInit(data)
+        streamPlayingRoom.init(req,res)
+        //const foundPlayer = await Player.findByPk(req.playerId)
+        //console.log('foundPlayer data is:', foundPlayer)
+
+    }
+    catch(error){
+        console.log(error)
+}
+
+})
 module.exports = router
