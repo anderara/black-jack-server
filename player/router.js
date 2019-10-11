@@ -37,7 +37,28 @@ router.post('/player', (req, res, next) => {
     
 })
 
-//let player join a room
+//Player has clicked start so we give them two cards
+router.put('/playercards', auth, async (req, res, next)=>{
+    console.log('hello from playercards')
+    
+    //find the player
+    const foundPlayer = await Player.findByPk(req.playerId)
+    console.log('player sending request has id', foundPlayer)
+
+    const updatefoundPlayer = await foundPlayer.update({
+        playerClickedStart: true
+    })
+
+    //function to get two cards from API
+    
+
+    /*const updatefoundPlayer = await foundPlayer.update({
+        gameroomId: req.body.gameRoomId
+    })*/
+    
+    .catch(err=>next(err))
+})
+
 
 
 
