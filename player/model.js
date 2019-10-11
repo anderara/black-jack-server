@@ -22,6 +22,21 @@ const Player = sequelize.define('player', {
     gamesLost: {
         type: Sequelize.INTEGER
     },
+    card1:{
+      type: Sequelize.STRING
+    },
+    card2:{
+      type: Sequelize.STRING
+    },
+    card3: {
+      type: Sequelize.STRING
+    },
+    card4:{
+      type: Sequelize.STRING
+    },
+    card5:{
+      type: Sequelize.STRING
+    },
     playerClickedStart: {
       type: Sequelize.BOOLEAN,
       defaultValue: false

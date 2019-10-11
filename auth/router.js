@@ -27,8 +27,13 @@ router.post('/login', (req, res, next) => {
                   })
                 } else if (bcrypt.compareSync(req.body.password, entity.password)) {
                     // 3. if the password is correct, return a JWT with the userId of the user (user.id)
+                    console.log('-- ENTITY -- in router.js is', entity.dataValues.playerName)
                     res.send({
-                      jwt: toJWT({ playerId: entity.id })
+                      jwt: toJWT({ playerId: entity.id }),
+                      name: entity.dataValues.playerName
+                      
+                      //name: toJWT({ })
+                      //include username and user id here
                     })
                 } else {
                     res.status(400).send({
