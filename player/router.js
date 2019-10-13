@@ -5,6 +5,10 @@ const bcrypt = require('bcrypt')
 const auth = require('../auth/middleWare')
 const router = new Router()
 const fetch = require('node-fetch')
+//set up a stream to update client side 
+const Sse = require('json-sse') //for data stream
+//const router = new Router()
+const stream = new Sse()
 
 router.get('/', (req, res, next)=>{
     console.log('hello from the get ')
@@ -38,6 +42,8 @@ router.post('/player', (req, res, next) => {
     .catch(next)
     
 })
+
+//stream cards data to user once cards is updated
 
 //Player has clicked start so we give them two cards
 router.put('/playercards', auth, async (req, res, next)=>{

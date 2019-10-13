@@ -22,8 +22,7 @@ router.get('/gameroom', async (req, res, next)=>{
     catch(error){
         console.log(error)
     }
-    /*.then(rooms => res.status(200).send(rooms))
-    .catch(err=>next(err))*/
+
 })
 
 //let player join a gameroom
@@ -40,10 +39,7 @@ router.post('/gameroom', async (req, res, next) => {
             console.log('gameRooms data is', data)
             stream.updateInit(data)
             stream.init(req,res)
-            /*.then(
-            gameroom => res.status(200).send(gameroom)
-            )
-            .catch(next)*/
+
         }
         catch(error){
             console.log(error)
