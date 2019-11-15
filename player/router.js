@@ -10,12 +10,10 @@ const Sse = require('json-sse') //for data stream
 const stream = new Sse()
 
 router.get('/', (req, res, next)=>{
-    console.log('hello from the get ')
     res.status(200).send('hello from get')
     .catch(err=>next(err))
 })
 router.post('/player', (req, res, next) => {
-
     const player = {
         email: req.body.email,
         playerName: req.body.playerName,
@@ -44,11 +42,8 @@ router.post('/player', (req, res, next) => {
 
 router.get('/playercards', auth, async (req, res, next)=>{
 
-    console.log('get/playercards endpoint')
     const allPlayers = await Player.findAll()
-    //console.log('gameRooms data looks like this:', gameRooms)
     const data = JSON.stringify(allPlayers)
-    console.log('data in /playercards route is', data)
     stream.updateInit(data)
     stream.init(req,res)
 
@@ -87,60 +82,18 @@ router.put('/playercards', auth, async (req, res, next)=>{
 
 
         const allPlayers = await Player.findAll()
-        //console.log('gameRooms data looks like this:', gameRooms)
         const data = JSON.stringify(allPlayers)
         console.log('data in /playercards route is', data)
         stream.updateInit(data)
         stream.init(req,res)
     }
     
-    /*
-    //find the player this part works
-    const foundPlayer = await Player.findByPk(req.playerId)
 
-
-   const updatefoundPlayer = await foundPlayer.update({
-        playerClickedStart: true
-    })
-    //function to get five cards from API
-        let cardsImages = []
-        const resCardDeck = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
-        const resCardDeckJson = await resCardDeck.json()
-
-        const cardDeckiD = resCardDeckJson.deck_id
-
-        const resCards = await fetch(`https://deckofcardsapi.com/api/deck/${cardDeckiD}/draw/?count=5`)
-        const resCardsJson = await resCards.json()
-        
-        const cards = resCardsJson.cards
-
-        cards.map(card => cardsImages.push(card.images.png))
-    
-        updatefoundPlayer.update({
-            card1:cardsImages[0],
-            card2:cardsImages[1],
-            card3:cardsImages[2],
-            card4:cardsImages[3],
-            card5:cardsImages[4]
-        })
-        //end of function to get cards
-        */
 
     catch{
         err=>next(err)
     }
-        /*
-    try{
-        console.log('stream game rooms example ')
-        const  = await GameRooms.findAll({include:[{model: Player}]})
-        //console.log('gameRooms data looks like this:', gameRooms)
-        const data = JSON.stringify(gameRooms)
-        stream.updateInit(data)
-        stream.init(req,res)
-    }
-    catch(error){
-        console.log(error)
-    }*/
+ 
 })
 
 
